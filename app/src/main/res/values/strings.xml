@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">BirdiKegel</string>
+    <string name="boton_ejercicios_para_hoy"> Ninguna sesión para hoy\n Pulse para actualizar </string>
+    <string name="ejercicios_para_hoy"> Ejercicios para hoy </string>
+    <string name="ejercicios_libres"> Ejercicios libres </string>
+    <string name="suave"> Suave </string>
+    <string name="medio"> Medio </string>
+    <string name="intenso"> Intenso </string>
+    <string name="rápido"> Rápido</string>
+    <string name="resistencia"> Resistencia </string>
+
+
+</resources>

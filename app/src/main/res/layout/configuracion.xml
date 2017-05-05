@@ -28,7 +28,7 @@
         android:id="@+id/sonido_en_menus"
         style="@style/Boton_Config"
         android:layout_weight="20"
-        android:drawableRight="@drawable/bluetooth_off"
+        android:drawableRight="@drawable/img_sound_off"
         android:textOff="@string/sonido_en_menus_no"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="174dp"/>
@@ -36,17 +36,18 @@
     <ToggleButton
         android:id="@+id/voces_en_textos"
         style="@style/Boton_Config"
-        android:drawableRight="@drawable/bluetooth_off"
+        android:drawableRight="@drawable/img_sound_off"
         android:textOff="@string/voces_en_texto_no"
         android:layout_weight="20"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="174dp"/>
+
     <ToggleButton
         android:id="@+id/presion_en"
         style="@style/Boton_Config"
-        android:drawableRight="@drawable/bluetooth_off"
-        android:textOff="@string/presion_en_mmHg_no"
         android:layout_weight="20"
+        android:drawableRight="@drawable/agua2"
+        android:textOff="@string/presion_en_mmHg_no"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="174dp"/>
 
@@ -54,7 +55,7 @@
         android:id="@+id/cambiar_usuario"
         style="@style/Boton_Config"
         android:layout_weight="20"
-        android:drawableRight="@drawable/bluetooth_off"
+        android:drawableRight="@drawable/usuario_2"
         android:text="@string/cambiar_usuario"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="174dp"/>

@@ -149,13 +149,12 @@
         tools:layout_editor_absoluteY="460dp"
         tools:layout_editor_absoluteX="3dp">
 
-        <ImageButton
+        <Button
             android:id="@+id/boton_config"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ajustes"
+            android:background="@drawable/ajustes"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="8dp"/>
 

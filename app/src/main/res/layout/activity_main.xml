@@ -63,71 +63,38 @@
 
             <Button
                 android:id="@+id/boton_suave"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/suave_2"
-                android:gravity="bottom|center"
-                android:paddingBottom="15dp"
-                android:scaleType="fitCenter"
+                android:background="@drawable/boton_suave"
+                android:layout_weight="1"
                 android:text="@string/suave"
-                android:textAllCaps="false"
-                android:textColor="@color/colorBlanco"
-                android:textSize="18sp"/>
+                style="@style/Boton_Ejercicio"/>
 
             <Button
+                style="@style/Boton_Ejercicio"
                 android:id="@+id/boton_medio"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@drawable/medio"
-                android:gravity="bottom|center"
-                android:paddingBottom="15dp"
-                android:scaleType="fitCenter"
-                android:text="@string/medio"
-                android:textAllCaps="false"
-                android:textColor="@color/colorBlanco"
-                android:textSize="18sp"/>
+                android:text="@string/medio"/>
 
             <Button
+                style="@style/Boton_Ejercicio"
                 android:id="@+id/boton_intenso"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/intenso_2"
-                android:gravity="bottom|center"
-                android:paddingBottom="15dp"
-                android:scaleType="fitCenter"
-                android:text="@string/intenso"
-                android:textAllCaps="false"
-                android:textColor="@color/colorBlanco"
-                android:textSize="18sp"/>
+                android:text="@string/intenso"/>
 
             <Button
+                style="@style/Boton_Ejercicio"
                 android:id="@+id/boton_rapido"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/rapido"
-                android:gravity="bottom|center"
-                android:paddingBottom="15dp"
-                android:scaleType="fitCenter"
-                android:text="@string/rapido"
-                android:textAllCaps="false"
-                android:textColor="@color/colorBlanco"
-                android:textSize="18sp"/>
+                android:text="@string/rapido"/>
 
             <Button
+                style="@style/Boton_Ejercicio"
                 android:id="@+id/boton_resistencia"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/resistencia"
-                android:gravity="bottom|center"
-                android:paddingBottom="15dp"
-                android:scaleType="fitCenter"
-                android:text="@string/resistencia"
-                android:textAllCaps="false"
-                android:textColor="@color/colorBlanco"
-                android:textSize="18sp"/>
+                android:text="@string/resistencia"/>
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -204,16 +171,9 @@
 
             <Button
                 android:id="@+id/boton_no_ejercicios"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/icono_pop_up"
-                android:gravity="bottom|center"
-                android:paddingBottom="15dp"
-                android:scaleType="fitCenter"
-                android:text="@string/boton_ejercicios_para_hoy"
-                android:textAllCaps="false"
-                android:textColor="@color/colorBlanco"
-                android:textSize="18sp"/>
+                style="@style/Boton_Ejercicio"
+                android:background="@drawable/icono_pop_up"></Button>
+
         </LinearLayout>
     </HorizontalScrollView>
 

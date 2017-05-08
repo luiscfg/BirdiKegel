@@ -72,28 +72,28 @@
                 style="@style/Boton_Ejercicio"
                 android:id="@+id/boton_medio"
                 android:layout_weight="1"
-                android:background="@drawable/medio"
+                android:background="@drawable/boton_medio"
                 android:text="@string/medio"/>
 
             <Button
                 style="@style/Boton_Ejercicio"
                 android:id="@+id/boton_intenso"
                 android:layout_weight="1"
-                android:background="@drawable/intenso_2"
+                android:background="@drawable/boton_intenso"
                 android:text="@string/intenso"/>
 
             <Button
                 style="@style/Boton_Ejercicio"
                 android:id="@+id/boton_rapido"
                 android:layout_weight="1"
-                android:background="@drawable/rapido"
+                android:background="@drawable/boton_rapido"
                 android:text="@string/rapido"/>
 
             <Button
                 style="@style/Boton_Ejercicio"
                 android:id="@+id/boton_resistencia"
                 android:layout_weight="1"
-                android:background="@drawable/resistencia"
+                android:background="@drawable/boton_resistencia"
                 android:text="@string/resistencia"/>
 
         </LinearLayout>
@@ -172,7 +172,7 @@
             <Button
                 android:id="@+id/boton_no_ejercicios"
                 style="@style/Boton_Ejercicio"
-                android:background="@drawable/icono_pop_up"></Button>
+                android:background="@drawable/boton_ejercicios_pendientes"></Button>
 
         </LinearLayout>
     </HorizontalScrollView>

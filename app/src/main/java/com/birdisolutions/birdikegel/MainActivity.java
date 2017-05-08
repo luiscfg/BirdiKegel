@@ -17,15 +17,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button mconfiguracion;
+        final ImageButton mconfiguracion;
 
  // Boton Configuración
 
-        mconfiguracion= (Button)findViewById(R.id.boton_config);
+        mconfiguracion= (ImageButton)findViewById(R.id.boton_config);
         mconfiguracion.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                mconfiguracion.setBackgroundResource(R.drawable.ajustes_pulsado); ;
                 //Iniciar Configuración de la aplicación
                 Intent i =new Intent(MainActivity.this, Configuracion.class);
                 startActivity(i);

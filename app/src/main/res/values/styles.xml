@@ -10,7 +10,7 @@
 
     <style name="Boton_Config" >
         <!-- Customize your theme here. -->
-        <item name="android:background">@drawable/boton_cambiar_de_usuario</item>
+        <item name="android:background">@drawable/boton_pulsado</item>
         <item name="android:padding">2dp</item>
         <item name="android:layout_margin">10dp</item>
         <item name="android:scaleType">fitCenter</item>

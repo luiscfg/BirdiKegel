@@ -16,7 +16,7 @@
     <string name="voces_en_texto_no"> Voces en texto NO</string>
     <string name="voces_en_texto_si"> Voces en texto SI</string>
     <string name="presion_en_mmHg_no"> Presión en cmH2O</string>
-    <string name="presion_en_mmHg_si"> Presión en mmHg SI</string>
+    <string name="presion_en_mmHg_si"> Presión en mmHg</string>
     <string name="cambiar_usuario"> cambiar de usuario</string>
 
 

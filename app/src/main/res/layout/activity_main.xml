@@ -54,44 +54,45 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         android:scrollbars="none"
-        tools:layout_editor_absoluteX="9dp">
+        >
 
         <LinearLayout
+            android:id="@+id/ejercicios_libres"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/boton_suave"
-                android:background="@drawable/boton_suave"
+                style="@style/Boton_Ejercicio"
                 android:layout_weight="1"
-                android:text="@string/suave"
-                style="@style/Boton_Ejercicio"/>
+                android:background="@drawable/boton_suave"
+                android:text="@string/suave"/>
 
             <Button
-                style="@style/Boton_Ejercicio"
                 android:id="@+id/boton_medio"
+                style="@style/Boton_Ejercicio"
                 android:layout_weight="1"
                 android:background="@drawable/boton_medio"
                 android:text="@string/medio"/>
 
             <Button
-                style="@style/Boton_Ejercicio"
                 android:id="@+id/boton_intenso"
+                style="@style/Boton_Ejercicio"
                 android:layout_weight="1"
                 android:background="@drawable/boton_intenso"
                 android:text="@string/intenso"/>
 
             <Button
-                style="@style/Boton_Ejercicio"
                 android:id="@+id/boton_rapido"
+                style="@style/Boton_Ejercicio"
                 android:layout_weight="1"
                 android:background="@drawable/boton_rapido"
                 android:text="@string/rapido"/>
 
             <Button
-                style="@style/Boton_Ejercicio"
                 android:id="@+id/boton_resistencia"
+                style="@style/Boton_Ejercicio"
                 android:layout_weight="1"
                 android:background="@drawable/boton_resistencia"
                 android:text="@string/resistencia"/>
@@ -101,7 +102,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -114,8 +115,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="443dp"
-        tools:layout_editor_absoluteX="-3dp">
+        >
 
         <ImageButton
             android:id="@+id/boton_config"

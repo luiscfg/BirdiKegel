@@ -3,9 +3,12 @@ package com.birdisolutions.birdikegel;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import java.io.ObjectInputStream;
 
 import static android.R.attr.drawable;
 import static android.R.attr.id;
@@ -18,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final ImageButton mconfiguracion;
+
+
 
  // Boton Configuración
 
@@ -34,4 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 }

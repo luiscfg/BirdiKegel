@@ -14,15 +14,15 @@ import java.io.ObjectInputStream;
 import static android.R.attr.drawable;
 import static android.R.attr.id;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Button sesion_suave,sesion_media,sesion_rapida,sesion_resistencia,sesion_intensa;
-
+    ImageButton m_configuracion,m_mail,m_salir;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
- //Botones Ejercicios Libres
+ //Botones Ejercicios Libres:asignacion Id
 
         sesion_suave=(Button)findViewById(R.id.boton_suave);
         sesion_media=(Button)findViewById(R.id.boton_medio);
@@ -30,58 +30,62 @@ public class MainActivity extends AppCompatActivity {
         sesion_rapida=(Button)findViewById(R.id.boton_rapido);
         sesion_resistencia=(Button)findViewById(R.id.boton_resistencia);
 
- /*       sesion_suave.setOnClickListener((View.OnClickListener) this);
-        sesion_media.setOnClickListener((View.OnClickListener) this);
-        sesion_intensa.setOnClickListener((View.OnClickListener) this);
-        sesion_rapida.setOnClickListener((View.OnClickListener) this);
-        sesion_resistencia.setOnClickListener((View.OnClickListener) this);
+//asignación listeners
 
-*/
-        final ImageButton mconfiguracion;
+        sesion_suave.setOnClickListener(this);
+        sesion_media.setOnClickListener(this);
+        sesion_intensa.setOnClickListener(this);
+        sesion_rapida.setOnClickListener(this);
+        sesion_resistencia.setOnClickListener(this);
 
-// Scroll Inferior: creación de listener y botones
-/*
-        LinearLayout m_ejercicios_libres=(LinearLayout)findViewById(R.id.ejercicios_libres);
-        m_ejercicios_libres.setClickable(true);
-       m_ejercicios_libres.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()){
-                    case(R.id.boton_suave):
-                        break;
+//Botones Button:asignacion Id
 
-                    case (R.id.boton_medio):
+        m_configuracion=(ImageButton)findViewById(R.id.boton_config);
+        m_mail=(ImageButton)findViewById(R.id.boton_mensajes);
+        m_salir=(ImageButton)findViewById(R.id.salir);
 
-                        break;
+//asignación listeners
 
-                    case(R.id.boton_rapido):
-
-                        break;
-
-                    case(R.id.boton_resistencia):
-                        break;
-
-                    case(R.id.boton_intenso):
-                        break;
-                }
-            }
-        });
-*/
- // Boton Configuración
-
-        mconfiguracion= (ImageButton)findViewById(R.id.boton_config);
-        mconfiguracion.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                //Iniciar Configuración de la aplicación
-                Intent i =new Intent(MainActivity.this, Configuracion.class);
-                startActivity(i);
-            }
-        });
-
-
+        m_configuracion.setOnClickListener(this);
+        m_mail.setOnClickListener(this);
+        m_salir.setOnClickListener(this);
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
 
+            case(R.id.boton_suave):
+                break;
+
+            case (R.id.boton_medio):
+
+                break;
+
+            case(R.id.boton_rapido):
+
+                break;
+
+            case(R.id.boton_resistencia):
+                break;
+
+            case(R.id.boton_intenso):
+                break;
+
+            case(R.id.boton_config):
+                Intent i =new Intent(MainActivity.this, Configuracion.class);
+                startActivity(i);
+                break;
+
+            case(R.id.salir):
+                finish();
+                break;
+
+            case(R.id.boton_mensajes):
+                break;
+
+        }
+    }
 }
+

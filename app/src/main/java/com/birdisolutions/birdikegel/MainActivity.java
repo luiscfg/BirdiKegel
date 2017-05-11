@@ -17,6 +17,10 @@ import static android.R.attr.id;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Button sesion_suave,sesion_media,sesion_rapida,sesion_resistencia,sesion_intensa;
     ImageButton m_configuracion,m_mail,m_salir;
+
+    Sesion m_Sesion_suave,m_Sesion_media,m_Sesion_intensa,m_Sesion_rapida,m_Sesion_resistencia;
+    Serie m_serie;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         m_mail.setOnClickListener(this);
         m_salir.setOnClickListener(this);
 
+//Creación de Sesiones ejercicios Libre
+
+        m_Sesion_suave=new Sesion();
+        m_serie= new Serie(10,10,5,1);
+        m_Sesion_suave.add_serie(m_serie);
+        m_serie=new Serie (10,2,2,1);
+        m_Sesion_suave.add_serie(m_serie);
+
+
+        m_Sesion_media=new Sesion();
+        m_Sesion_intensa=new Sesion();
+        m_Sesion_rapida=new Sesion();
+        m_Sesion_resistencia=new Sesion();
+
     }
 
     @Override
@@ -57,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
 
             case(R.id.boton_suave):
+
                 break;
 
             case (R.id.boton_medio):

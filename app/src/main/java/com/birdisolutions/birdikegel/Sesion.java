@@ -8,7 +8,7 @@ import java.util.Vector;
 
 public class Sesion {
 
-    Vector m_vector;
+    Vector m_vector=new Vector();
     public void add_serie(Serie m_serie){
       m_vector.addElement(m_serie);
     }

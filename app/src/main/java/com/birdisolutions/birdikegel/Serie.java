@@ -7,16 +7,17 @@ import java.util.Vector;
  * Se encarga de mantener los dartos y operaciones sobre los ejercicios
  */
 public class Serie {
-    int repeticiones,tiempo_relajacion,tiempo_contraccion, n_Muestras;
+    int repeticiones,tiempo_relajacion,tiempo_contraccion, n_Muestras,dificultad;
     public final int  V_MUESTREO = 10;
 
     int numero_muestras;
-    Serie(int repeticiones, int tiempo_relajacion, int tiempo_contraccion) {
+    Serie(int repeticiones, int tiempo_relajacion, int tiempo_contraccion,int dificultad) {
         this.repeticiones=repeticiones;
         this.tiempo_relajacion=tiempo_relajacion;
         this.tiempo_contraccion=tiempo_contraccion;
+        this.dificultad=dificultad;
         n_Muestras= V_MUESTREO*repeticiones*(tiempo_relajacion+tiempo_contraccion);
-//        int[] array_muestras= new int[n_Muestras];
+        int[] array_muestras= new int[n_Muestras];
     }
 
     public int getRepeticiones() {

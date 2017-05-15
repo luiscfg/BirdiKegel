@@ -7,7 +7,7 @@ import java.util.Vector;
  * Se encarga de mantener los dartos y operaciones sobre los ejercicios
  */
 public class Serie {
-    int repeticiones,tiempo_relajacion,tiempo_contraccion, n_Muestras,dificultad;
+    private int repeticiones,tiempo_relajacion,tiempo_contraccion, n_Muestras,dificultad;
     public final int  V_MUESTREO = 10;
 
     int numero_muestras;

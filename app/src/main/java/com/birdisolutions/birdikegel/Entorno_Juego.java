@@ -1,5 +1,6 @@
 package com.birdisolutions.birdikegel;
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -16,7 +18,8 @@ public class Entorno_Juego extends AppCompatActivity {
 
     ProgressBar progressBarHorizontal;
     Button btnProgress;
-    ImageButton btnsalir, texto_imagen;
+    ImageButton btnsalir;
+    ImageView texto_imagen;
 
     private Sesion la_sesion;
 
@@ -57,10 +60,11 @@ public class Entorno_Juego extends AppCompatActivity {
 
         btnProgress = (Button)findViewById(R.id.btn1);
         btnsalir = (ImageButton)findViewById(R.id.salir);
-        texto_imagen = (ImageButton)findViewById(R.id.boton_mensajes);
+        texto_imagen = (ImageView) findViewById(R.id.mensaje);
+        texto_imagen.setBackground(null);
 
         progressBarHorizontal = (ProgressBar)findViewById(R.id.progressbar_Horizontal);
-        // progressBarHorizontal.setProgress(0);
+        progressBarHorizontal.setProgress(0);
 
 
 
@@ -95,15 +99,22 @@ public class Entorno_Juego extends AppCompatActivity {
                 progreso=0;
                 while ((System.currentTimeMillis()-tiempo_cero)<tiempo_Relajacion){
 
-                    // Indica Relaja
- /*                   runOnUiThread(new Runnable() {
+                    // Ejecuta relaja: Indica Relaja
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            texto_imagen.setImageResource(R.drawable.relaja_relax_reducido);
+                        texto_imagen.setImageResource(R.drawable.relaja_relax_reducido);
                         }
                     });
 
- */                 SystemClock.sleep(20);
+//                  Código actuando sobre botón
+ /*                   texto_imagen.post(new Runnable() {
+                        public void run() {
+                        texto_imagen.setImageResource(R.drawable.relaja_relax_reducido);
+                        }
+                    });
+*/
+                    SystemClock.sleep(20);
                     progreso= (int) (100.*(System.currentTimeMillis()-tiempo_cero)/tiempo_Relajacion);
                     publishProgress(progreso);
 
@@ -114,15 +125,22 @@ public class Entorno_Juego extends AppCompatActivity {
                 progreso=0;
                 while ((System.currentTimeMillis()-tiempo_cero)<tiempo_Contraccion){
 
-                    //Indica Contrae
-
- /*                   runOnUiThread(new Runnable() {
+                //Ejecuta Contrae: Indica Contrae
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            texto_imagen.setImageResource(R.drawable.contrae_squeeze_reducido);
+                        texto_imagen.setImageResource(R.drawable.contrae_squeeze_reducido);
+                    }
+                 });
+
+//                  Código actuando sobre botón
+/*                   texto_imagen.post(new Runnable() {
+                        public void run() {
+                        texto_imagen.setImageResource(R.drawable.contrae_squeeze_reducido);
                         }
                     });
-  */                SystemClock.sleep(20);
+*/
+                    SystemClock.sleep(20);
                     progreso= (int) (100.*(System.currentTimeMillis()-tiempo_cero)/tiempo_Contraccion);
                     publishProgress(progreso);
 

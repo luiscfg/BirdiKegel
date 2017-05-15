@@ -22,7 +22,8 @@
             android:name=".Configuracion"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".Entorno_Juego">
+        <activity android:name=".Entorno_Juego"
+                  android:screenOrientation="portrait">
         </activity>
     </application>
 

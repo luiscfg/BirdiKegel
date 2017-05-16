@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import static com.birdisolutions.birdikegel.MainActivity.CLAVE_INDICE_SERIE;
 import static com.birdisolutions.birdikegel.MainActivity.SESION_BIRDI;
 
 public class Entorno_Juego extends AppCompatActivity {
@@ -21,6 +22,7 @@ public class Entorno_Juego extends AppCompatActivity {
     ImageButton btnsalir;
     ImageView texto_imagen;
 
+    int numero_serie;
     private Sesion la_sesion;
 
     @Override
@@ -33,6 +35,9 @@ public class Entorno_Juego extends AppCompatActivity {
 // Recibimos la sesión a realizar. Se realiza a través de la clase Comunicador y sus métodos estáticos. Queda almacenada en la variable la_esión
 
         la_sesion = (Sesion) Comunicador.getObjeto();
+// Recibimos el número de la serie e ejecutar:
+
+       numero_serie= getIntent().getIntExtra(CLAVE_INDICE_SERIE, 0);
 
 //Definimos escuchadores en botones
 
@@ -84,7 +89,7 @@ public class Entorno_Juego extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-        Serie mi_serie=la_sesion.coje_serie(0);
+        Serie mi_serie=la_sesion.coje_serie(numero_serie);
 
 
             int n_repeticiones=mi_serie.getRepeticiones();

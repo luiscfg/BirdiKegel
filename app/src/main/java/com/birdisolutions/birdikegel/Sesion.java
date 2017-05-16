@@ -33,6 +33,7 @@ public class Sesion {
     }
 
     public int dime_tamano(){
+        n_elementos=m_vector.size();
         return n_elementos;
     }
 

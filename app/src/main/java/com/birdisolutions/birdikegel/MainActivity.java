@@ -22,6 +22,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String SESION_BIRDI= "com.birdisolutions.birdikegel.sesion";
     public static final String SESRIE_BIRDI= "com.birdisolutions.birdikegel.serie";
 
+    public  final static String CLAVE_INDICE_SERIE= "com.birdisolutions.birdikegel.clave_indice_serie";
+    public final static String CLAVE_ENTORNO= "com.birdisolutions.birdikegel.clave_entorno_juego";
+
+    public enum TipodeEntorno {FORZUDO,BEBE,MONITOR};
+
     Button sesion_suave,sesion_media,sesion_rapida,sesion_resistencia,sesion_intensa;
     ImageButton m_configuracion,m_mail,m_salir;
 
@@ -81,9 +86,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
 
-            case(R.id.boton_suave):
-                Intent i =MainActivity.nueva_Sesion(MainActivity.this,m_Sesion_suave);
-                startActivity(i);
+            case(R.id.boton_suave):ejecuta_sesion(m_Sesion_suave);
+
                 break;
 
             case (R.id.boton_medio):
@@ -116,10 +120,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public static Intent nueva_Sesion (Context packageContext, Sesion mi_sesion){
-        Intent i = new Intent(packageContext, Entorno_Juego.class);
-        Comunicador.setObjeto(mi_sesion);
-        return i;
+
+/* Ejecución de sesiones:Presenta pantallas resumen y ejecuta cada uno de las series.
+   La sesion se encuentra almacenada en el comunicador.
+   Las variables de configuración se encuientran almacenadas en archivo de configuración
+   1. Recibe sesión.
+   2.Ejecuta cada uno de las series
+            Presenta Resumen de serie
+ */
+    int ejecuta_sesion(Sesion mi_sesion){
+
+        Serie mi_serie;
+        TipodeEntorno entorno;
+        entorno=TipodeEntorno.FORZUDO;
+
+        Comunicador.setObjeto(mi_sesion);  //Actualiza comunicador con la sesión a ejecutar.
+
+        //Empezamos ejeciciones de series
+
+        int numero_series=mi_sesion.dime_tamano(); //Leemos número de series
+        int numero_serie=0;
+        for (numero_serie=0;numero_serie<numero_series;numero_serie++){
+
+            //Ejecucución entorno forzudo. A modificar laq selección.
+            Intent i = new Intent(MainActivity.this, Entorno_Juego.class);
+            i.putExtra(CLAVE_INDICE_SERIE,numero_serie); //Indicamos número de serie
+            startActivity(i);
+        }
+
+       return (0);
+
     }
 }
 

@@ -41,7 +41,7 @@ public class Entorno_Juego extends AppCompatActivity {
     long tiempo_cero;
     int progreso;
 
-    boolean ocupado=false;
+    boolean ocupado = false;
 
 
     @Override
@@ -51,11 +51,11 @@ public class Entorno_Juego extends AppCompatActivity {
 
         añadirVistas();
 
- //     Datos Condiguración:
+        //     Datos Condiguración:
 
-        boolean presion_mercurio= getIntent().getBooleanExtra(PRESION_MERCURIO, false);
-        boolean sonido_texto= getIntent().getBooleanExtra(SONIDO_TEXTO, false);
-        boolean sonido_menus= getIntent().getBooleanExtra(SONIDO_MENUS, false);
+        boolean presion_mercurio = getIntent().getBooleanExtra(PRESION_MERCURIO, false);
+        boolean sonido_texto = getIntent().getBooleanExtra(SONIDO_TEXTO, false);
+        boolean sonido_menus = getIntent().getBooleanExtra(SONIDO_MENUS, false);
 
 // Recibimos la sesión a realizar. Se realiza a través de la clase Comunicador y sus métodos estáticos. Queda almacenada en la variable la_esión
 
@@ -82,7 +82,7 @@ public class Entorno_Juego extends AppCompatActivity {
             }
         });
         contador_serie.setText(null);
-        if(presion_mercurio)indicador_presion.setText("mmHg");
+        if (presion_mercurio) indicador_presion.setText("mmHg");
         else indicador_presion.setText("cmH2O");
 
 
@@ -116,86 +116,158 @@ public class Entorno_Juego extends AppCompatActivity {
     }
 
     void ejecuta_serie(int n_serie) {
-        int i;
+
         Serie mi_serie = la_sesion.coje_serie(n_serie);
-        int n_repeticiones = mi_serie.getRepeticiones();
 
-        tiempo_Relajacion = 1000 * mi_serie.getTiempo_relajacion();
-        tiempo_Contraccion = 1000 * mi_serie.getTiempo_contraccion();
-
-
-        for (i = 0; i < n_repeticiones; i++) {
-            texto_imagen.setImageResource(R.drawable.relaja_relax_reducido);
-//Relaja
-
-            tiempo_Barra = tiempo_Relajacion;
-            tiempo_cero = System.currentTimeMillis();
-            SystemClock.sleep(2);
-            progreso = 0;
-
-            new BarraSerie().execute();
-
-
-
-
-
-//Contrae
-
-            texto_imagen.setImageResource(R.drawable.contrae_squeeze_reducido);
-            tiempo_Barra = tiempo_Contraccion;
-            tiempo_cero = System.currentTimeMillis();
-            SystemClock.sleep(20);
-            progreso = 0;
-
-            new BarraSerie().execute();
-
-
-        }
+        new ejecuta_la_series().execute(mi_serie);
 
     }
 
 
 
-        public class BarraSerie extends AsyncTask<Void, Integer, Void> {
+        public class ejecuta_la_series extends AsyncTask<Serie, Integer, Integer> {
+
+
 
 
             @Override
-            protected void onPreExecute() {
-                Toast.makeText(Entorno_Juego.this, "onPreExecute", Toast.LENGTH_SHORT).show();
-                progreso = 0;
+            protected Integer doInBackground(Serie... series) {
+                int count = series.length;
+                int repeticiones, progreso;
+                long tiempo_relax, tiempo_contrae;
 
+                for (int i = 0; i < count; i++) {
+
+                    tiempo_relax = series[i].getTiempo_relajacion() * 1000;
+                    tiempo_contrae = series[i].getTiempo_contraccion() * 1000;
+                    repeticiones = series[i].getRepeticiones();
+                  for (int j = 0; j < repeticiones; j++) {
+
+                      //Relaja
+                      runOnUiThread(new Runnable() {
+                          @Override
+                          public void run() {
+                              texto_imagen.setImageResource(R.drawable.relaja_relax_reducido);
+                          }
+                      });
+                      tiempo_cero = System.currentTimeMillis();
+                      SystemClock.sleep(2);
+
+                      while ((System.currentTimeMillis() - tiempo_cero) < tiempo_relax) {
+                          SystemClock.sleep(20);
+                          progreso = (int) (100. * (System.currentTimeMillis() - tiempo_cero) / tiempo_relax);
+                          publishProgress(progreso);
+
+                      }
+
+                      //Contrae
+
+                      runOnUiThread(new Runnable() {
+                          @Override
+                          public void run() {
+                              texto_imagen.setImageResource(R.drawable.contrae_squeeze_reducido);
+                          }
+                      });
+                      tiempo_cero = System.currentTimeMillis();
+                      SystemClock.sleep(2);
+
+                      while ((System.currentTimeMillis() - tiempo_cero) < tiempo_contrae) {
+                          SystemClock.sleep(20);
+                          progreso = (int) (100. * (System.currentTimeMillis() - tiempo_cero) / tiempo_contrae);
+                          publishProgress(progreso);
+
+
+                      }
+                      if (isCancelled()) break;
+                  }
             }
-
-            @Override
-            protected Void doInBackground(Void... params) {
-
-                tiempo_cero = System.currentTimeMillis();
-                SystemClock.sleep(2);
-
-                while ((System.currentTimeMillis() - tiempo_cero) < tiempo_Barra) {
-                    SystemClock.sleep(20);
-                    progreso = (int) (100. * (System.currentTimeMillis() - tiempo_cero) / tiempo_Barra);
-                    publishProgress(progreso);
-
-                }
-
                 return null;
             }
 
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                Toast.makeText(Entorno_Juego.this, "onPreExecute", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            protected void onPostExecute(Integer integer) {
+                super.onPostExecute(integer);
+                Toast.makeText(Entorno_Juego.this, "onPostExecute", Toast.LENGTH_SHORT).show();
+                btnProgress.setClickable(true);
+            }
 
             @Override
             protected void onProgressUpdate(Integer... values) {
-
                 progressBarHorizontal.setProgress(values[0]);
             }
 
             @Override
-            protected void onPostExecute(Void result) {
-                Toast.makeText(Entorno_Juego.this, "onPostExecute", Toast.LENGTH_SHORT).show();
-                btnProgress.setClickable(true);
-
+            protected void onCancelled(Integer integer) {
+                super.onCancelled(integer);
             }
 
-
-    }
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+            }
+        }
 }
+
+
+/*
+
+
+
+
+
+
+                int count = series.length;
+                int repeticiones, progreso;
+                long tiempo_relax, tiempo_contrae;
+
+                for (int i = 0; i < count; i++) {
+
+                    tiempo_relax = series[i].getTiempo_relajacion() * 1000;
+                    tiempo_contrae = series[i].getTiempo_contraccion() * 1000;
+                    repeticiones = series[i].getRepeticiones();
+                    for (int j = 0; j < repeticiones; j++) {
+
+                        //Relaja
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                texto_imagen.setImageResource(R.drawable.relaja_relax_reducido);
+                            }
+                        });
+                        tiempo_cero = System.currentTimeMillis();
+                        SystemClock.sleep(2);
+
+                        while ((System.currentTimeMillis() - tiempo_cero) < tiempo_relax) {
+                            SystemClock.sleep(20);
+                            progreso = (int) (100. * (System.currentTimeMillis() - tiempo_cero) / tiempo_relax);
+                            publishProgress(progreso);
+
+                        }
+
+                        //Contrae
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                texto_imagen.setImageResource(R.drawable.contrae_squeeze_reducido);
+                            }
+                        });
+                        tiempo_cero = System.currentTimeMillis();
+                        SystemClock.sleep(2);
+
+                        while ((System.currentTimeMillis() - tiempo_cero) < tiempo_contrae) {
+                            SystemClock.sleep(20);
+                            progreso = (int) (100. * (System.currentTimeMillis() - tiempo_cero) / tiempo_contrae);
+                            publishProgress(progreso);
+
+                        }
+
+                    }
+
+*/

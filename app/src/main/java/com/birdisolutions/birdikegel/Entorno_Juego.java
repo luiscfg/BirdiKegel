@@ -17,6 +17,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.concurrent.ExecutionException;
+
+import static android.os.AsyncTask.Status.FINISHED;
 import static com.birdisolutions.birdikegel.MainActivity.PRESION_MERCURIO;
 import static com.birdisolutions.birdikegel.MainActivity.SONIDO_MENUS;
 import static com.birdisolutions.birdikegel.MainActivity.SONIDO_TEXTO;
@@ -38,7 +41,7 @@ public class Entorno_Juego extends AppCompatActivity {
     long tiempo_cero;
     int progreso;
 
-
+    boolean ocupado=false;
 
 
     @Override
@@ -130,7 +133,11 @@ public class Entorno_Juego extends AppCompatActivity {
             SystemClock.sleep(2);
             progreso = 0;
 
-//            new BarraSerie().execute();
+            new BarraSerie().execute();
+
+
+
+
 
 //Contrae
 
@@ -141,6 +148,7 @@ public class Entorno_Juego extends AppCompatActivity {
             progreso = 0;
 
             new BarraSerie().execute();
+
 
         }
 
@@ -187,7 +195,6 @@ public class Entorno_Juego extends AppCompatActivity {
                 btnProgress.setClickable(true);
 
             }
-
 
 
     }

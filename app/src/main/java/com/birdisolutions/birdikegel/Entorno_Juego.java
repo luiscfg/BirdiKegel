@@ -59,7 +59,6 @@ public class Entorno_Juego extends AppCompatActivity {
         la_sesion = (Sesion) Comunicador.getObjeto();
 
 
-
 //Definimos escuchadores en botones
 
         btnProgress.setOnClickListener(new Button.OnClickListener() {
@@ -83,7 +82,7 @@ public class Entorno_Juego extends AppCompatActivity {
         if(presion_mercurio)indicador_presion.setText("mmHg");
         else indicador_presion.setText("cmH2O");
 
-        ejecuta_sesion();
+
     }
 
 
@@ -131,7 +130,7 @@ public class Entorno_Juego extends AppCompatActivity {
             SystemClock.sleep(2);
             progreso = 0;
 
-            new BarraSerie().execute();
+//            new BarraSerie().execute();
 
 //Contrae
 

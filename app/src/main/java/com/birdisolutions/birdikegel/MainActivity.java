@@ -86,7 +86,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         m_Sesion_resistencia=new Sesion();
 
     }
-
+    @Override
+    public void onResume(){
+        super.onResume();
+        //Actualiza datos Configuración
+        m_Datos_Configuracion= leer_configuracion();
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -148,8 +153,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (numero_serie=1;numero_serie<numero_series;numero_serie++){
 
             //Ejecucución entorno forzudo. A modificar laq selección.
+
             Intent i = new Intent(MainActivity.this, Entorno_Juego.class);
+
             // Añade configuración
+
             i.putExtra(SONIDO_MENUS,m_Datos_Configuracion.isSonido_en_menus());
             i.putExtra(SONIDO_TEXTO,m_Datos_Configuracion.isSonido_texto());
             i.putExtra(PRESION_MERCURIO,m_Datos_Configuracion.isPresion_en_mercurio());

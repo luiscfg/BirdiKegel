@@ -19,8 +19,9 @@ import static android.R.attr.id;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
   //Constantes
-    public static final String SESION_BIRDI= "com.birdisolutions.birdikegel.sesion";
-    public static final String SESRIE_BIRDI= "com.birdisolutions.birdikegel.serie";
+    public static final String SONIDO_MENUS= "com.birdisolutions.birdikegel.sonido_menus";
+    public static final String SONIDO_TEXTO= "com.birdisolutions.birdikegel.sonido_texto";
+    public static final String PRESION_MERCURIO= "com.birdisolutions.birdikegel.presion_mercurio";
 
     public  final static String CLAVE_INDICE_SERIE= "com.birdisolutions.birdikegel.clave_indice_serie";
     public final static String CLAVE_ENTORNO= "com.birdisolutions.birdikegel.clave_entorno_juego";
@@ -33,10 +34,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Sesion m_Sesion_suave,m_Sesion_media,m_Sesion_intensa,m_Sesion_rapida,m_Sesion_resistencia;
     Serie m_serie;
 
+    public Datos_Configuracion m_Datos_Configuracion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);// Lectura configuración
+
+        m_Datos_Configuracion= leer_configuracion();
 
  //Botones Ejercicios Libres:asignacion Id
 
@@ -144,11 +149,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             //Ejecucución entorno forzudo. A modificar laq selección.
             Intent i = new Intent(MainActivity.this, Entorno_Juego.class);
+            // Añade configuración
+            i.putExtra(SONIDO_MENUS,m_Datos_Configuracion.isSonido_en_menus());
+            i.putExtra(SONIDO_TEXTO,m_Datos_Configuracion.isSonido_texto());
+            i.putExtra(PRESION_MERCURIO,m_Datos_Configuracion.isPresion_en_mercurio());
+
             startActivity(i);
         }
 
        return (0);
 
     }
-}
 
+
+//Lectura configuración
+
+    public Datos_Configuracion  leer_configuracion(){
+        Datos_Configuracion m_Datos_Configuracion;
+        try
+        {
+            ObjectInputStream ois =
+                    new ObjectInputStream(
+                            openFileInput("configuracion.txt"));
+            this.m_Datos_Configuracion= (Datos_Configuracion) ois.readObject();
+            ois.close();
+        }
+        catch (Exception ex)
+        {
+            Log.e("Ficheros", "Error al leer fichero configuracion desde memoria interna");
+        }
+
+        return (this.m_Datos_Configuracion);
+    }
+
+}

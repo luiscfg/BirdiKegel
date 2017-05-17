@@ -2,6 +2,7 @@ package com.birdisolutions.birdikegel;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,11 @@ public class Entorno_Juego extends AppCompatActivity {
     int numero_serie;
     private Sesion la_sesion;
 
+    long tiempo_Relajacion, tiempo_Barra;
+    long tiempo_Contraccion;
+    long tiempo_cero;
+    int progreso;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +41,7 @@ public class Entorno_Juego extends AppCompatActivity {
 // Recibimos la sesión a realizar. Se realiza a través de la clase Comunicador y sus métodos estáticos. Queda almacenada en la variable la_esión
 
         la_sesion = (Sesion) Comunicador.getObjeto();
-// Recibimos el número de la serie e ejecutar:
 
-       numero_serie= getIntent().getIntExtra(CLAVE_INDICE_SERIE, 0);
 
 //Definimos escuchadores en botones
 
@@ -45,7 +49,8 @@ public class Entorno_Juego extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                new AsyncTask_load().execute();
+
+                ejecuta_serie();
                 btnProgress.setClickable(false);
             }
         });
@@ -63,115 +68,87 @@ public class Entorno_Juego extends AppCompatActivity {
 
     private void añadirVistas() {
 
-        btnProgress = (Button)findViewById(R.id.btn1);
-        btnsalir = (ImageButton)findViewById(R.id.salir);
+        btnProgress = (Button) findViewById(R.id.btn1);
+        btnsalir = (ImageButton) findViewById(R.id.salir);
         texto_imagen = (ImageView) findViewById(R.id.mensaje);
         texto_imagen.setBackground(null);
 
-        progressBarHorizontal = (ProgressBar)findViewById(R.id.progressbar_Horizontal);
+        progressBarHorizontal = (ProgressBar) findViewById(R.id.progressbar_Horizontal);
         progressBarHorizontal.setProgress(0);
 
 
-
     }
 
 
-    public class AsyncTask_load extends AsyncTask<Void, Integer, Void> {
+    void ejecuta_serie() {
+        int i;
+        Serie mi_serie = la_sesion.coje_serie(0);
+        int n_repeticiones = mi_serie.getRepeticiones();
 
-        int progreso;
+        tiempo_Relajacion = 1000 * mi_serie.getTiempo_relajacion();
+        tiempo_Contraccion = 1000 * mi_serie.getTiempo_contraccion();
 
 
-        @Override
-        protected void onPreExecute() {
-            Toast.makeText(Entorno_Juego.this, "onPreExecute", Toast.LENGTH_LONG).show();
+        for (i = 0; i < n_repeticiones; i++) {
+            texto_imagen.setImageResource(R.drawable.relaja_relax_reducido);
+//Relaja
+            tiempo_Barra = tiempo_Relajacion;
+            tiempo_cero = System.currentTimeMillis();
+            SystemClock.sleep(2);
             progreso = 0;
+            new BarraSerie().execute();
+
+//Contrae
+            texto_imagen.setImageResource(R.drawable.contrae_squeeze_reducido);
+            tiempo_Barra = tiempo_Contraccion;
+            tiempo_cero = System.currentTimeMillis();
+            SystemClock.sleep(20);
+            progreso = 0;
+            new BarraSerie().execute();
         }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-        Serie mi_serie=la_sesion.coje_serie(numero_serie);
-
-
-            int n_repeticiones=mi_serie.getRepeticiones();
-
-            long tiempo_Relajacion=1000*mi_serie.getTiempo_relajacion();
-            long tiempo_Contraccion=1000*mi_serie.getTiempo_contraccion(), tiempo_cero;
-
-            while (n_repeticiones>0){
-
-                tiempo_cero=System.currentTimeMillis();
-                SystemClock.sleep(2);
-                progreso=0;
-                while ((System.currentTimeMillis()-tiempo_cero)<tiempo_Relajacion){
-
-                    // Ejecuta relaja: Indica Relaja
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                        texto_imagen.setImageResource(R.drawable.relaja_relax_reducido);
-                        }
-                    });
-
-//                  Código actuando sobre botón
- /*                   texto_imagen.post(new Runnable() {
-                        public void run() {
-                        texto_imagen.setImageResource(R.drawable.relaja_relax_reducido);
-                        }
-                    });
-*/
-                    SystemClock.sleep(20);
-                    progreso= (int) (100.*(System.currentTimeMillis()-tiempo_cero)/tiempo_Relajacion);
-                    publishProgress(progreso);
-
-
-                }
-                tiempo_cero=System.currentTimeMillis();
-                SystemClock.sleep(20);
-                progreso=0;
-                while ((System.currentTimeMillis()-tiempo_cero)<tiempo_Contraccion){
-
-                //Ejecuta Contrae: Indica Contrae
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                        texto_imagen.setImageResource(R.drawable.contrae_squeeze_reducido);
-                    }
-                 });
-
-//                  Código actuando sobre botón
-/*                   texto_imagen.post(new Runnable() {
-                        public void run() {
-                        texto_imagen.setImageResource(R.drawable.contrae_squeeze_reducido);
-                        }
-                    });
-*/
-                    SystemClock.sleep(20);
-                    progreso= (int) (100.*(System.currentTimeMillis()-tiempo_cero)/tiempo_Contraccion);
-                    publishProgress(progreso);
-
-                }
-                n_repeticiones--;
-            }
-            return null;
-        }
-
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-
-            progressBarHorizontal.setProgress(values[0]);
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            Toast.makeText(Entorno_Juego.this, "onPostExecute", Toast.LENGTH_LONG).show();
-            btnProgress.setClickable(true);
-        }
-
 
     }
 
+        public class BarraSerie extends AsyncTask<Void, Integer, Void> {
+
+
+            @Override
+            protected void onPreExecute() {
+                Toast.makeText(Entorno_Juego.this, "onPreExecute", Toast.LENGTH_LONG).show();
+                progreso = 0;
+            }
+
+            @Override
+            protected Void doInBackground(Void... params) {
+
+
+                tiempo_cero = System.currentTimeMillis();
+                SystemClock.sleep(2);
+
+                while ((System.currentTimeMillis() - tiempo_cero) < tiempo_Barra) {
+                    SystemClock.sleep(20);
+                    progreso = (int) (100. * (System.currentTimeMillis() - tiempo_cero) / tiempo_Barra);
+                    publishProgress(progreso);
+
+                }
+
+                return null;
+            }
+
+
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+
+                progressBarHorizontal.setProgress(values[0]);
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                Toast.makeText(Entorno_Juego.this, "onPostExecute", Toast.LENGTH_LONG).show();
+                btnProgress.setClickable(true);
+            }
 
 
 
+    }
 }

@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //Creación de Sesiones ejercicios Libre
 
         m_Sesion_suave=new Sesion();
-        m_serie= new Serie(2,10,5,1);
+        m_serie= new Serie(2,3,2,1);
         m_Sesion_suave.add_serie(m_serie);
-        m_serie=new Serie (2,4,2,1);
+        m_serie=new Serie (2,2,1,1);
         m_Sesion_suave.add_serie(m_serie);
 
 
@@ -140,11 +140,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         int numero_series=mi_sesion.dime_tamano(); //Leemos número de series
         int numero_serie=0;
-        for (numero_serie=0;numero_serie<numero_series;numero_serie++){
+        for (numero_serie=1;numero_serie<numero_series;numero_serie++){
 
             //Ejecucución entorno forzudo. A modificar laq selección.
             Intent i = new Intent(MainActivity.this, Entorno_Juego.class);
-            i.putExtra(CLAVE_INDICE_SERIE,numero_serie); //Indicamos número de serie
             startActivity(i);
         }
 

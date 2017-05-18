@@ -3,6 +3,8 @@ package com.birdisolutions.birdikegel;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -40,9 +42,13 @@ public class Entorno_Juego extends AppCompatActivity {
     long tiempo_Contraccion;
     long tiempo_cero;
     int progreso;
+    int cargasonido_contrae,cargasonido_relaja;
 
-    boolean ocupado = false;
+    boolean presion_mercurio;
+    boolean sonido_texto ;
+    boolean sonido_menus;
 
+    SoundPool mSoundPool;  //Generador de sonido
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,14 +59,19 @@ public class Entorno_Juego extends AppCompatActivity {
 
         //     Datos Condiguración:
 
-        boolean presion_mercurio = getIntent().getBooleanExtra(PRESION_MERCURIO, false);
-        boolean sonido_texto = getIntent().getBooleanExtra(SONIDO_TEXTO, false);
-        boolean sonido_menus = getIntent().getBooleanExtra(SONIDO_MENUS, false);
+        presion_mercurio = getIntent().getBooleanExtra(PRESION_MERCURIO, false);
+        sonido_texto = getIntent().getBooleanExtra(SONIDO_TEXTO, false);
+        sonido_menus = getIntent().getBooleanExtra(SONIDO_MENUS, false);
 
 // Recibimos la sesión a realizar. Se realiza a través de la clase Comunicador y sus métodos estáticos. Queda almacenada en la variable la_esión
 
         la_sesion = (Sesion) Comunicador.getObjeto();
 
+ //Creamos un sonido tipo Notificación
+
+        mSoundPool = new SoundPool(1, AudioManager.STREAM_NOTIFICATION,0);
+        cargasonido_relaja= mSoundPool.load(this, R.raw.relaja,1);
+        cargasonido_contrae= mSoundPool.load(this, R.raw.contrae,1);
 
 //Definimos escuchadores en botones
 
@@ -108,7 +119,7 @@ public class Entorno_Juego extends AppCompatActivity {
         int numero_series = la_sesion.dime_tamano();
         int i = 1;
         while (i < numero_series) {
-            contador_serie.setText((i + 1) + "/" + numero_series);
+
             ejecuta_serie(i);
             i++;
         }
@@ -127,13 +138,14 @@ public class Entorno_Juego extends AppCompatActivity {
 
         public class ejecuta_la_series extends AsyncTask<Serie, Integer, Integer> {
 
-
+            int repeticiones,j;
 
 
             @Override
             protected Integer doInBackground(Serie... series) {
                 int count = series.length;
-                int repeticiones, progreso;
+
+                int progreso;
                 long tiempo_relax, tiempo_contrae;
 
                 for (int i = 0; i < count; i++) {
@@ -141,17 +153,24 @@ public class Entorno_Juego extends AppCompatActivity {
                     tiempo_relax = series[i].getTiempo_relajacion() * 1000;
                     tiempo_contrae = series[i].getTiempo_contraccion() * 1000;
                     repeticiones = series[i].getRepeticiones();
-                  for (int j = 0; j < repeticiones; j++) {
+                  for ( j = 0; j < repeticiones; j++) {
 
                       //Relaja
                       runOnUiThread(new Runnable() {
                           @Override
                           public void run() {
                               texto_imagen.setImageResource(R.drawable.relaja_relax_reducido);
+                              contador_serie.setText((j + 1) + "/" + repeticiones);
                           }
                       });
+
+                      //Lanza audio si est activo
+
+                      if(sonido_menus)mSoundPool.play(cargasonido_relaja,1,1,0,0,1);
                       tiempo_cero = System.currentTimeMillis();
                       SystemClock.sleep(2);
+
+
 
                       while ((System.currentTimeMillis() - tiempo_cero) < tiempo_relax) {
                           SystemClock.sleep(20);
@@ -168,6 +187,11 @@ public class Entorno_Juego extends AppCompatActivity {
                               texto_imagen.setImageResource(R.drawable.contrae_squeeze_reducido);
                           }
                       });
+
+                      //Lanza audio si est activo
+
+                      if(sonido_menus)mSoundPool.play(cargasonido_contrae,1,1,0,0,1);
+
                       tiempo_cero = System.currentTimeMillis();
                       SystemClock.sleep(2);
 
@@ -193,7 +217,8 @@ public class Entorno_Juego extends AppCompatActivity {
             @Override
             protected void onPostExecute(Integer integer) {
                 super.onPostExecute(integer);
-                Toast.makeText(Entorno_Juego.this, "onPostExecute", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Entorno_Juego.this, "onPostExecute: Ejecutada Serie", Toast.LENGTH_SHORT).show();
+
                 btnProgress.setClickable(true);
             }
 

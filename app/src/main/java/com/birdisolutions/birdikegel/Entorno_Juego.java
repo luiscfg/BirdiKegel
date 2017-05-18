@@ -35,13 +35,9 @@ public class Entorno_Juego extends AppCompatActivity {
     ImageView texto_imagen;
     TextView indicador_presion, contador_serie;
 
-    int numero_serie;
+    int serie_en_curso,numero_series;
     private Sesion la_sesion;
-    boolean acabar_sesion, en_progreso;
-    long tiempo_Relajacion, tiempo_Barra;
-    long tiempo_Contraccion;
     long tiempo_cero;
-    int progreso;
     int cargasonido_contrae,cargasonido_relaja;
 
     boolean presion_mercurio;
@@ -116,13 +112,9 @@ public class Entorno_Juego extends AppCompatActivity {
 
     void ejecuta_sesion() {
 
-        int numero_series = la_sesion.dime_tamano();
-        int i = 1;
-        while (i < numero_series) {
-
-            ejecuta_serie(i);
-            i++;
-        }
+        numero_series = la_sesion.dime_tamano();
+        serie_en_curso=0;
+        ejecuta_serie(serie_en_curso);  //Empezamos con la serie en 0, luego en el post execute del asynctask ejecuta_la_serie, se van ejecutando las otras series
 
     }
 
@@ -130,13 +122,13 @@ public class Entorno_Juego extends AppCompatActivity {
 
         Serie mi_serie = la_sesion.coje_serie(n_serie);
 
-        new ejecuta_la_series().execute(mi_serie);
+        new ejecuta_la_serie().execute(mi_serie);
 
     }
 
 
 
-        public class ejecuta_la_series extends AsyncTask<Serie, Integer, Integer> {
+        public class ejecuta_la_serie extends AsyncTask<Serie, Integer, Integer> {
 
             int repeticiones,j;
 
@@ -218,8 +210,9 @@ public class Entorno_Juego extends AppCompatActivity {
             protected void onPostExecute(Integer integer) {
                 super.onPostExecute(integer);
                 Toast.makeText(Entorno_Juego.this, "onPostExecute: Ejecutada Serie", Toast.LENGTH_SHORT).show();
-
-                btnProgress.setClickable(true);
+                serie_en_curso++;
+                if (serie_en_curso<numero_series) ejecuta_serie(serie_en_curso); //Ejecutamos la siguiente serie
+                else btnProgress.setClickable(true);
             }
 
             @Override

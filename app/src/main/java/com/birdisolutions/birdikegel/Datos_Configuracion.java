@@ -16,6 +16,11 @@ public class Datos_Configuracion implements Serializable {
         private int dia;
         private boolean sonido_texto,sonido_en_menus,presion_en_mercurio;
         public Datos_Configuracion(String nombre, int pin,int agno,int mes, int dia){
+            this.nombre=nombre;
+            this.pin=pin;
+            this.agno=agno;
+            this.dia=dia;
+            this.mes=mes;
             this.sonido_en_menus=true;
             this.sonido_texto=true;
             this.presion_en_mercurio=true;

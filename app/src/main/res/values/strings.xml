@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">BirdiKegel</string>
+    <string name="boton_ejercicios_para_hoy"> Ninguna sesión para hoy\n Pulse para actualizar </string>
+    <string name="ejercicios_para_hoy"> Ejercicios para hoy </string>
+    <string name="ejercicios_libres"> Ejercicios libres </string>
+    <string name="suave"> Suave </string>
+    <string name="medio"> Medio </string>
+    <string name="intenso"> Intenso </string>
+    <string name="rapido"> Rápido</string>
+    <string name="resistencia"> Resistencia</string>
+
+    <string name="configuracion"> Configuración</string>
+    <string name="desconectarBirdi"> Desconectar Birdi</string>
+    <string name="sonido_en_menus_no"> Sonido en menús NO</string>
+    <string name="sonido_en_menus_si"> Sonido en menús SI</string>
+    <string name="voces_en_texto_no"> Voces en texto NO</string>
+    <string name="voces_en_texto_si"> Voces en texto SI</string>
+    <string name="presion_en_mmHg_no"> Presión en cmH2O</string>
+    <string name="presion_en_mmHg_si"> Presión en mmHg</string>
+    <string name="cambiar_usuario"> cambiar de usuario</string>
+
+    <string name="title_activity_entorno__juego">Entorno_Juego</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+
+</resources>
